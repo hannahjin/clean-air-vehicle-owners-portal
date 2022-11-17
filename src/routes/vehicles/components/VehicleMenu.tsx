@@ -36,8 +36,13 @@ function VehicleMenuContent({ currentVehicleId }: VehicleMenuContentProps) {
             onClick={() => {
               navigate(`/vehicles/${vehicle.id}`);
             }}
+            flexDirection="column"
+            alignItems="flex-start"
           >
             <Text fontSize="xl">{getVehicleName(vehicle)}</Text>
+            <Text fontSize="sm" color="GrayText">
+              {vehicle.series}
+            </Text>
           </MenuItem>
         );
       })}

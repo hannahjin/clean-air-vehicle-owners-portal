@@ -1,12 +1,13 @@
 {
   "vehicles": [
     {
-      "id": "3b76889c-5971-4220-907d-ff1450fc2447",
+      "id": "38aa5d34-d6e6-4a3c-91a8-b69187619a5d",
       "year": "2020",
       "make": "Audi",
       "model": "Q5",
       "series": "Premium Plus",
       "style": "4D SUV 2.0T PHEV",
+      "annualMileage": 7830,
       "mileage": {
         "jan": 417,
         "feb": 871,
@@ -20,15 +21,18 @@
         "oct": 891,
         "nov": 220,
         "dec": 775
-      }
+      },
+      "fuelSaving": 39.52829367574918,
+      "emissionReduction": 170.25648202335833
     },
     {
-      "id": "55994cfb-1181-49c8-a5b7-92b2db72ecb9",
+      "id": "581a35ed-f5ee-4f2b-8370-01aa3922a3f5",
       "year": "2020",
       "make": "Tesla",
       "model": "Model Y",
       "series": "Performance",
       "style": "4D SUV",
+      "annualMileage": 5708,
       "mileage": {
         "jan": 975,
         "feb": 207,
@@ -42,15 +46,18 @@
         "oct": 897,
         "nov": 481,
         "dec": 283
-      }
+      },
+      "fuelSaving": 650.5324699352451,
+      "emissionReduction": 3300.26798995639
     },
     {
-      "id": "21a2009a-a794-4e44-a920-96ca8d4545af",
+      "id": "f588ebc6-eaea-4ea3-99ff-343f136dd16c",
       "year": "2021",
       "make": "Volvo",
       "model": "XC60",
       "series": "T8 - Polestar",
       "style": "4D SUV PHEV",
+      "annualMileage": 7238,
       "mileage": {
         "jan": 851,
         "feb": 460,
@@ -64,15 +71,18 @@
         "oct": 496,
         "nov": 263,
         "dec": 886
-      }
+      },
+      "fuelSaving": 30.256172777761094,
+      "emissionReduction": 117.30434611614328
     },
     {
-      "id": "4520b172-c307-4e41-ac10-901f212e8c1a",
+      "id": "1d85a25f-02d2-44bf-9a91-b16a1f42200f",
       "year": "2014",
       "make": "Toyota",
       "model": "RAV4",
       "series": "EV",
       "style": "4D SUV FWD",
+      "annualMileage": 5858,
       "mileage": {
         "jan": 938,
         "feb": 287,
@@ -86,7 +96,9 @@
         "oct": 428,
         "nov": 973,
         "dec": 8
-      }
+      },
+      "fuelSaving": 554.0193920738744,
+      "emissionReduction": 2656.655967679876
     }
   ]
 }

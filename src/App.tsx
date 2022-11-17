@@ -11,7 +11,7 @@ import { queryClient } from "./queryClient";
 import { router } from "./router";
 
 const contentPaddingX = { base: 5, md: "60px" };
-const contentPaddingTop = { base: 3, md: 12 };
+const contentPaddingTop = { base: 6, md: 12 };
 
 export const App = () => (
   <NetworkBoundary>

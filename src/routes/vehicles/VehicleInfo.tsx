@@ -93,7 +93,6 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
 
   // TODO: use data from input
   const annualFuelCost = 1234;
-  const annualFuelSaving = 2000;
 
   const fuelEconomyLayout = useBreakpointValue({
     base: "column" as const,
@@ -122,15 +121,20 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
           <>
             <MenuButton as="button" tabIndex={0} width="fit-content">
               <HStack as="span" spacing={1}>
-                <Heading as="h1">{vehicleName}</Heading>
+                <VStack spacing={0}>
+                  <Heading as="h1">{vehicleName}</Heading>
+                </VStack>
                 <ChevronDownIcon boxSize="40px" />
               </HStack>
+              <Text fontSize="lg" color="GrayText">
+                {data.series} • {data.style}
+              </Text>
             </MenuButton>
             {isOpen && <VehicleMenu />}
           </>
         )}
       </Menu>
-      <Spacer height={10} />
+      <Spacer height={8} />
       <Card
         backgroundColor="chakra-body-bg"
         width="fit-content"
@@ -160,7 +164,7 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
               </Text>
             </Text>
             <Text fontSize="5xl" fontWeight="bold" as="span">
-              {formatNumber(annualFuelSaving, { style: "currency", currency: LOCAL_CURRENCY })}
+              {formatNumber(data.fuelSaving, { style: "currency", currency: LOCAL_CURRENCY })}
             </Text>
             <Text>over {formatNumber(sum(Object.values(data.mileage)))} mi this year</Text>
           </VStack>
