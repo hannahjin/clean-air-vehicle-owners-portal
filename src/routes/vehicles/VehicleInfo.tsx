@@ -1,15 +1,41 @@
 import { memo } from "react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Heading, HStack, Menu, MenuButton } from "@chakra-ui/react";
+import {
+  Card,
+  Divider,
+  Heading,
+  HStack,
+  Menu,
+  MenuButton,
+  Spacer,
+  Stack,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import capitalize from "capitalize";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
+import {
+  ResponsiveContainer,
+  Bar,
+  BarChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  LabelList,
+} from "recharts";
 
 import { API_HOST, Vehicle, VEHICLES_ENDPOINT } from "api";
+import ecoIcon from "assets/eco-energy.png";
 import { ErrorFallback } from "components/ErrorFallback";
 import { NetworkBoundary } from "components/NetworkBoundary";
 import { queryClient } from "queryClient";
+import { formatNumber } from "utils/formatNumber";
+import { sum } from "utils/sum";
 
 import { VehicleMenu } from "./components/VehicleMenu";
 import { getVehicleName } from "./getVehicleName";
@@ -35,6 +61,12 @@ const vehicleQuery = (id: string) => ({
   },
 });
 
+const yAxisPadding = {
+  top: 48,
+};
+
+const LOCAL_CURRENCY = "USD";
+
 interface VehicleContentProps {
   vehicleId: string;
 }
@@ -48,6 +80,35 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
   }
 
   const vehicleName = getVehicleName(data);
+
+  const mileage = Object.entries(data.mileage).map(([month, value]) => ({
+    month: capitalize(month),
+    value,
+  }));
+
+  const chartHeight = useBreakpointValue({
+    base: 200,
+    md: 350,
+  });
+
+  // TODO: use data from input
+  const annualFuelCost = 1234;
+  const annualFuelSaving = 2000;
+
+  const fuelEconomyLayout = useBreakpointValue({
+    base: "column" as const,
+    md: "row" as const,
+  });
+
+  const dividerStyle = useBreakpointValue({
+    base: {
+      orientation: "horizontal" as const,
+    },
+    md: {
+      orientation: "vertical" as const,
+      height: "130px",
+    },
+  });
 
   return (
     <>
@@ -69,6 +130,65 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
           </>
         )}
       </Menu>
+      <Spacer height={10} />
+      <Card
+        backgroundColor="chakra-body-bg"
+        width="fit-content"
+        paddingX={6}
+        paddingBottom={8}
+        borderRadius="lg"
+      >
+        <HStack
+          backgroundColor="chakra-body-text"
+          paddingY={3}
+          paddingX={5}
+          marginBottom={3}
+          marginX={-6}
+          borderTopRadius="lg"
+        >
+          <img src={ecoIcon} width="24px" alt="" role="presentation" />
+          <Text fontWeight="semibold" color="Background" whiteSpace="nowrap">
+            Fuel economy and environment
+          </Text>
+        </HStack>
+        <Stack direction={fuelEconomyLayout} spacing={6} alignItems="center">
+          <VStack alignItems="flex-start" spacing="0">
+            <Text>
+              You{" "}
+              <Text as="span" fontSize="3xl" fontWeight="semibold">
+                saved
+              </Text>
+            </Text>
+            <Text fontSize="5xl" fontWeight="bold" as="span">
+              {formatNumber(annualFuelSaving, { style: "currency", currency: LOCAL_CURRENCY })}
+            </Text>
+            <Text>over {formatNumber(sum(Object.values(data.mileage)))} mi this year</Text>
+          </VStack>
+          <Divider {...dividerStyle} />
+          <VStack alignItems="flex-end" whiteSpace="nowrap">
+            <Text>Annual Fuel Cost</Text>
+            <Text fontSize="4xl">
+              {formatNumber(annualFuelCost, { style: "currency", currency: LOCAL_CURRENCY })}
+            </Text>
+          </VStack>
+        </Stack>
+      </Card>
+      <Spacer height={8} />
+      <Heading as="h2" fontSize="xl" role="">
+        Mileage driven per month
+      </Heading>
+      <Spacer height={4} />
+      <ResponsiveContainer width="100%" height={chartHeight}>
+        <BarChart data={mileage}>
+          <CartesianGrid strokeDasharray="4 3" />
+          <XAxis dataKey="month" />
+          <YAxis padding={yAxisPadding} unit=" mi" name="Miles driven" />
+          <Tooltip />
+          <Bar dataKey="value" fill="var(--chakra-colors-blue-300)">
+            <LabelList dataKey="value" position="top" fontSize="var(--chakra-fontSizes-xs)" />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </>
   );
 }
