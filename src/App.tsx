@@ -1,4 +1,4 @@
-import { ChakraProvider, CSSReset, Box, Spinner, Heading } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, Box, Spinner } from "@chakra-ui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider } from "react-router-dom";
@@ -22,7 +22,6 @@ export const App = () => (
           <ColorModeSwitcher justifySelf="flex-end" />
         </Box>
         <Box as="main" paddingX={contentPaddingX} paddingTop={contentPaddingTop}>
-          <Heading as="h1">Owner’s Portal</Heading>
           <RouterProvider
             router={router}
             fallbackElement={
