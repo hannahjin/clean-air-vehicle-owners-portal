@@ -14,38 +14,16 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 
-import { API_HOST, VEHICLES_ENDPOINT } from "api";
 import { NetworkBoundary } from "components/NetworkBoundary";
 
-interface Vehicle {
-  id: string;
-  year: string;
-  make: string;
-  model: string;
-  series: string;
-  style: string;
-}
+import { getVehicleName } from "./getVehicleName";
+import { vehiclesListQuery } from "./query";
 
 const cardHoverStyle = {
   transform: "scale(1.02)",
   transitionDuration: "200ms",
   transitionTimingFunction: "ease-in-out",
 };
-
-const vehiclesListQuery = () => ({
-  queryKey: ["vehicles"],
-  queryFn: async (): Promise<Vehicle[]> => {
-    const response = await fetch(`${API_HOST}${VEHICLES_ENDPOINT}`, {
-      headers: new Headers({
-        accept: "application/json",
-      }),
-    });
-    if (!response.ok) {
-      throw new Error();
-    }
-    return response.json();
-  },
-});
 
 function VehiclesListContent() {
   const { data } = useQuery(vehiclesListQuery());
@@ -73,7 +51,7 @@ function VehiclesListContent() {
             <HStack justifyContent="space-between">
               <VStack alignItems="flex-start">
                 <Text fontSize="lg" fontWeight="bold" whiteSpace="nowrap">
-                  {vehicle.make} {vehicle.model} {vehicle.year}{" "}
+                  {getVehicleName(vehicle)}{" "}
                   <Text as="span" fontWeight="normal">
                     {vehicle.series}
                   </Text>

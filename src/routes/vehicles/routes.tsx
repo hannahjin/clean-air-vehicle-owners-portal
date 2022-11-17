@@ -1,4 +1,4 @@
-import { Vehicle } from "./Vehicle";
+import { VehicleInfo } from "./VehicleInfo";
 import { VehiclesList } from "./VehiclesList";
 
 export const vehiclesRoutes = [
@@ -7,7 +7,7 @@ export const vehiclesRoutes = [
     element: <VehiclesList />,
   },
   {
-    path: "vehicles/:id",
-    element: <Vehicle />,
+    path: "vehicles/:vehicleId",
+    element: <VehicleInfo />,
   },
 ];
