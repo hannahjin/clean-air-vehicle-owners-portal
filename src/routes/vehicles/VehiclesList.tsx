@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
+import * as reactRouterDom from "react-router-dom";
 
 import { NetworkBoundary } from "components/NetworkBoundary";
 
@@ -44,8 +45,8 @@ function VehiclesListContent() {
             key={vehicle.id}
             backgroundColor="Background"
             padding={4}
-            as="a"
-            href={`/vehicles/${vehicle.id}`}
+            as={reactRouterDom.Link}
+            to={`/vehicles/${vehicle.id}`}
             _hover={prefersReducedMotion ? undefined : cardHoverStyle}
           >
             <HStack justifyContent="space-between">
