@@ -1,14 +1,12 @@
 {
-  "owners": [
+  "vehicles": [
     {
-      "id": "a009c84f-3f93-49fa-9cf9-44c86d550f11",
-      "vehicle": {
-        "year": "2020",
-        "make": "Audi",
-        "model": "Q5",
-        "series": "Premium Plus",
-        "style": "4D SUV 2.0T PHEV"
-      },
+      "id": "56788186-168c-457e-b16a-a8ab11f543d5",
+      "year": "2020",
+      "make": "Audi",
+      "model": "Q5",
+      "series": "Premium Plus",
+      "style": "4D SUV 2.0T PHEV",
       "mileage": {
         "jan": "417",
         "feb": "871",
@@ -25,14 +23,12 @@
       }
     },
     {
-      "id": "3dd285de-cfbf-4ea0-a836-ac6a39b29f8c",
-      "vehicle": {
-        "year": "2020",
-        "make": "Tesla",
-        "model": "Model Y",
-        "series": "Performance",
-        "style": "4D SUV"
-      },
+      "id": "400ab5ef-ee73-4b9c-a6f2-286e422f9d8d",
+      "year": "2020",
+      "make": "Tesla",
+      "model": "Model Y",
+      "series": "Performance",
+      "style": "4D SUV",
       "mileage": {
         "jan": "975",
         "feb": "207",
@@ -49,14 +45,12 @@
       }
     },
     {
-      "id": "38ab1742-3ef9-4e52-8b48-e2a62fdc10df",
-      "vehicle": {
-        "year": "2021",
-        "make": "Volvo",
-        "model": "XC60",
-        "series": "T8 - Polestar",
-        "style": "4D SUV PHEV"
-      },
+      "id": "bf7552b7-16c1-4833-8c78-c0f9562e5cdd",
+      "year": "2021",
+      "make": "Volvo",
+      "model": "XC60",
+      "series": "T8 - Polestar",
+      "style": "4D SUV PHEV",
       "mileage": {
         "jan": "851",
         "feb": "460",
@@ -73,14 +67,12 @@
       }
     },
     {
-      "id": "00a3bfa6-4dc3-489a-b64c-77e7a972e2b7",
-      "vehicle": {
-        "year": "2014",
-        "make": "Toyota",
-        "model": "RAV4",
-        "series": "EV",
-        "style": "4D SUV FWD"
-      },
+      "id": "52eab6f7-62db-4367-b07e-e7b19b2059b2",
+      "year": "2014",
+      "make": "Toyota",
+      "model": "RAV4",
+      "series": "EV",
+      "style": "4D SUV FWD",
       "mileage": {
         "jan": "938",
         "feb": "287",

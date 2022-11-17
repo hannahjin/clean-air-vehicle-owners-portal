@@ -15,7 +15,7 @@ function main() {
     fs.writeFileSync(
       API_OUTPUT,
       JSON.stringify({
-        owners: normalizedData,
+        vehicles: normalizedData,
       })
     );
   } catch (error) {
@@ -31,13 +31,11 @@ main();
 function normalizeOwnersData(data: Record<string, string>[]) {
   return data.map((item) => ({
     id: uuidv4(),
-    vehicle: {
-      year: item.Year,
-      make: item.Make,
-      model: item.Model,
-      series: item.Series,
-      style: item.Style,
-    },
+    year: item.Year,
+    make: item.Make,
+    model: item.Model,
+    series: item.Series,
+    style: item.Style,
     mileage: {
       jan: item.Jan,
       feb: item.Feb,

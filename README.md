@@ -9,7 +9,7 @@ npx csvtojson data/trips.csv > data/trips.json
 Normalize data for json server and output to [data/api.json](./data/api.json)
 
 ```
-npx ts-node scripts/mockOwnersData.ts
+npx ts-node scripts/mockVehiclesData.ts
 ```
 
 Run mock data server
