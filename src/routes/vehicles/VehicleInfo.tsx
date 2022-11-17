@@ -3,13 +3,13 @@ import { memo } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Card,
-  Divider,
   Heading,
   HStack,
   Menu,
   MenuButton,
   Spacer,
   Stack,
+  StackDivider,
   Text,
   useBreakpointValue,
   VStack,
@@ -94,19 +94,14 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
   // TODO: use data from input
   const annualFuelCost = 1234;
 
+  const cardWidth = useBreakpointValue({
+    base: "100%",
+    md: "fit-content",
+  });
+
   const fuelEconomyLayout = useBreakpointValue({
     base: "column" as const,
     md: "row" as const,
-  });
-
-  const dividerStyle = useBreakpointValue({
-    base: {
-      orientation: "horizontal" as const,
-    },
-    md: {
-      orientation: "vertical" as const,
-      height: "130px",
-    },
   });
 
   return (
@@ -126,18 +121,18 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
                 </VStack>
                 <ChevronDownIcon boxSize="40px" />
               </HStack>
-              <Text fontSize="lg" color="GrayText">
-                {data.series} • {data.style}
-              </Text>
             </MenuButton>
             {isOpen && <VehicleMenu />}
           </>
         )}
       </Menu>
+      <Text fontSize="lg" color="GrayText" alignSelf="flex-start">
+        {data.series} • {data.style}
+      </Text>
       <Spacer height={8} />
       <Card
         backgroundColor="chakra-body-bg"
-        width="fit-content"
+        width={cardWidth}
         paddingX={6}
         paddingBottom={8}
         borderRadius="lg"
@@ -155,7 +150,12 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
             Fuel economy and environment
           </Text>
         </HStack>
-        <Stack direction={fuelEconomyLayout} spacing={6} alignItems="center">
+        <Stack
+          direction={fuelEconomyLayout}
+          spacing={6}
+          alignItems="center"
+          divider={<StackDivider />}
+        >
           <VStack alignItems="flex-start" spacing="0">
             <Text>
               You{" "}
@@ -168,12 +168,17 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
             </Text>
             <Text>over {formatNumber(sum(Object.values(data.mileage)))} mi this year</Text>
           </VStack>
-          <Divider {...dividerStyle} />
           <VStack alignItems="flex-end" whiteSpace="nowrap">
             <Text>Annual Fuel Cost</Text>
             <Text fontSize="4xl">
               {formatNumber(annualFuelCost, { style: "currency", currency: LOCAL_CURRENCY })}
             </Text>
+          </VStack>
+          <VStack whiteSpace="nowrap">
+            <Text>
+              Reduced CO<sub>2</sub> emission by
+            </Text>
+            <Text fontSize="4xl">{formatNumber(data.emissionReduction)} lbs</Text>
           </VStack>
         </Stack>
       </Card>
