@@ -1,0 +1,100 @@
+{
+  "owners": [
+    {
+      "id": "a009c84f-3f93-49fa-9cf9-44c86d550f11",
+      "vehicle": {
+        "year": "2020",
+        "make": "Audi",
+        "model": "Q5",
+        "series": "Premium Plus",
+        "style": "4D SUV 2.0T PHEV"
+      },
+      "mileage": {
+        "jan": "417",
+        "feb": "871",
+        "mar": "949",
+        "apr": "231",
+        "may": "507",
+        "jun": "632",
+        "jul": "830",
+        "aug": "534",
+        "sep": "973",
+        "oct": "891",
+        "nov": "220",
+        "dec": "775"
+      }
+    },
+    {
+      "id": "3dd285de-cfbf-4ea0-a836-ac6a39b29f8c",
+      "vehicle": {
+        "year": "2020",
+        "make": "Tesla",
+        "model": "Model Y",
+        "series": "Performance",
+        "style": "4D SUV"
+      },
+      "mileage": {
+        "jan": "975",
+        "feb": "207",
+        "mar": "475",
+        "apr": "700",
+        "may": "550",
+        "jun": "586",
+        "jul": "128",
+        "aug": "223",
+        "sep": "203",
+        "oct": "897",
+        "nov": "481",
+        "dec": "283"
+      }
+    },
+    {
+      "id": "38ab1742-3ef9-4e52-8b48-e2a62fdc10df",
+      "vehicle": {
+        "year": "2021",
+        "make": "Volvo",
+        "model": "XC60",
+        "series": "T8 - Polestar",
+        "style": "4D SUV PHEV"
+      },
+      "mileage": {
+        "jan": "851",
+        "feb": "460",
+        "mar": "849",
+        "apr": "596",
+        "may": "166",
+        "jun": "909",
+        "jul": "981",
+        "aug": "766",
+        "sep": "15",
+        "oct": "496",
+        "nov": "263",
+        "dec": "886"
+      }
+    },
+    {
+      "id": "00a3bfa6-4dc3-489a-b64c-77e7a972e2b7",
+      "vehicle": {
+        "year": "2014",
+        "make": "Toyota",
+        "model": "RAV4",
+        "series": "EV",
+        "style": "4D SUV FWD"
+      },
+      "mileage": {
+        "jan": "938",
+        "feb": "287",
+        "mar": "940",
+        "apr": "230",
+        "may": "242",
+        "jun": "540",
+        "jul": "497",
+        "aug": "724",
+        "sep": "51",
+        "oct": "428",
+        "nov": "973",
+        "dec": "8"
+      }
+    }
+  ]
+}
