@@ -83,9 +83,9 @@ export const VehiclesList = memo(function VehiclesList() {
   return (
     <>
       <Helmet>
-        <title>Your Vehicles</title>
+        <title>My Vehicles</title>
       </Helmet>
-      <Heading as="h1">Your Vehicles</Heading>
+      <Heading as="h1">My Vehicles</Heading>
       <NetworkBoundary fallback={<Fallback />}>
         <VehiclesListContent />
       </NetworkBoundary>

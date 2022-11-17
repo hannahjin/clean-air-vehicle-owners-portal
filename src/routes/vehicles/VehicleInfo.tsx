@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import {
   Card,
   Heading,
@@ -17,7 +17,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import capitalize from "capitalize";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   ResponsiveContainer,
   Bar,
@@ -214,6 +214,13 @@ export const VehicleInfo = memo(function VehicleInfo() {
       <Helmet>
         <title>Vehicle</title>
       </Helmet>
+      <Link to="/vehicles">
+        <HStack as="span" spacing={1}>
+          <ChevronLeftIcon />
+          <Text as="span">Back to My Vehicles</Text>
+        </HStack>
+      </Link>
+      <Spacer height={6} />
       <VehicleContent vehicleId={vehicleId} />
     </NetworkBoundary>
   );
