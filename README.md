@@ -1,3 +1,13 @@
+## Quick start
+
+Make sure you have the matching node version installed
+
+```
+nvm use && yarn
+yarn start:api
+yarn start
+```
+
 ## Mock data
 
 Convert csv to json
