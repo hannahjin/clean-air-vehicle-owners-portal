@@ -82,6 +82,7 @@ function normalizeVehiclesData(
 
     return {
       ...vehicle,
+      annualFuelCost: manufacturerVehicle && calculateAnnualFuelCost(vehicle, manufacturerVehicle),
       fuelSaving: manufacturerVehicle && calculateFuelCostSaving(vehicle, manufacturerVehicle),
       emissionReduction:
         manufacturerVehicle && calculateEmissionReduction(vehicle, manufacturerVehicle),
@@ -107,6 +108,30 @@ function estimateGasUsage(
     mpg = ESTIMATED_AVG_MPG;
   }
   return (Number(drivingData.annualMileage) * portion) / mpg;
+}
+
+function calculateAnnualFuelCost(
+  drivingData: Record<string, unknown>,
+  manufacturerData: Record<string, string>
+) {
+  if (manufacturerData.Classification === "EV") {
+    const eletricityOnlyEstimate = estimateElectricityUsage(drivingData, manufacturerData);
+    return ELECTRICITY_UNIT_COST * eletricityOnlyEstimate;
+  }
+
+  if (manufacturerData.Classification === "PHEV") {
+    const hybridElectricityEstimate = estimateElectricityUsage(
+      drivingData,
+      manufacturerData,
+      1 - ESTIMATED_GAS_DRIVING_PERCENTAGE
+    );
+    const hybridGasEstimate = estimateGasUsage(
+      drivingData,
+      manufacturerData,
+      ESTIMATED_GAS_DRIVING_PERCENTAGE
+    );
+    return ELECTRICITY_UNIT_COST * hybridElectricityEstimate + GAS_UNIT_COST * hybridGasEstimate;
+  }
 }
 
 function calculateFuelCostSaving(

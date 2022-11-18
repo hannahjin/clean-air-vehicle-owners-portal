@@ -28,7 +28,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   public render() {
     if (this.state.hasError) {
-      return this.props.errorFallback ?? <ErrorFallback height="100vh" />;
+      return this.props.errorFallback ?? <ErrorFallback flexGrow={1} width="100%" height="100%" />;
     }
 
     return this.props.children;

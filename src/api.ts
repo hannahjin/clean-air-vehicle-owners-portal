@@ -23,6 +23,7 @@ export interface Vehicle {
     dec: number;
   };
   annualMileage: number;
+  annualFuelCost: number;
   fuelSaving: number;
   emissionReduction: number;
 }

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
-import { MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { HStack, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -23,11 +24,21 @@ function VehicleMenuContent({ currentVehicleId }: VehicleMenuContentProps) {
   const navigate = useNavigate();
 
   if (!vehicles) {
-    return null;
+    return <Text paddingX={2}>Sorry, we are not able to find your vehicles right now.</Text>;
+  }
+
+  if (vehicles.length === 0) {
+    // TODO (hananh): support add a vehicle action.
+    return (
+      <MenuItem as={HStack} paddingX={2} spacing={2}>
+        <AddIcon />
+        <Text>Add a vehicle</Text>
+      </MenuItem>
+    );
   }
 
   return (
-    <MenuList>
+    <>
       {vehicles.map((vehicle) => {
         return (
           <MenuItem
@@ -46,7 +57,7 @@ function VehicleMenuContent({ currentVehicleId }: VehicleMenuContentProps) {
           </MenuItem>
         );
       })}
-    </MenuList>
+    </>
   );
 }
 
@@ -54,8 +65,10 @@ export function VehicleMenu() {
   const { vehicleId } = useParams();
 
   return (
-    <NetworkBoundary>
-      <VehicleMenuContent currentVehicleId={vehicleId} />
-    </NetworkBoundary>
+    <MenuList padding={0}>
+      <NetworkBoundary>
+        <VehicleMenuContent currentVehicleId={vehicleId} />
+      </NetworkBoundary>
+    </MenuList>
   );
 }

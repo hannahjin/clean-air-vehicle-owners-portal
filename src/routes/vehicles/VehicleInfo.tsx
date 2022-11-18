@@ -2,14 +2,13 @@ import { memo } from "react";
 
 import { ChevronDownIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import {
-  Card,
+  Button,
   Heading,
   HStack,
   Menu,
   MenuButton,
+  Skeleton,
   Spacer,
-  Stack,
-  StackDivider,
   Text,
   useBreakpointValue,
   VStack,
@@ -30,13 +29,11 @@ import {
 } from "recharts";
 
 import { API_HOST, Vehicle, VEHICLES_ENDPOINT } from "api";
-import ecoIcon from "assets/eco-energy.png";
 import { ErrorFallback } from "components/ErrorFallback";
 import { NetworkBoundary } from "components/NetworkBoundary";
 import { queryClient } from "queryClient";
-import { formatNumber } from "utils/formatNumber";
-import { sum } from "utils/sum";
 
+import { FuelEconomy } from "./components/FuelEconomy";
 import { VehicleMenu } from "./components/VehicleMenu";
 import { getVehicleName } from "./getVehicleName";
 
@@ -65,8 +62,6 @@ const yAxisPadding = {
   top: 48,
 };
 
-const LOCAL_CURRENCY = "USD";
-
 interface VehicleContentProps {
   vehicleId: string;
 }
@@ -91,19 +86,6 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
     md: 350,
   });
 
-  // TODO: use data from input
-  const annualFuelCost = 1234;
-
-  const cardWidth = useBreakpointValue({
-    base: "100%",
-    md: "fit-content",
-  });
-
-  const fuelEconomyLayout = useBreakpointValue({
-    base: "column" as const,
-    md: "row" as const,
-  });
-
   return (
     <>
       <Helmet>
@@ -111,11 +93,9 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
       </Helmet>
       <Menu isLazy matchWidth>
         {({ isOpen }) => (
-          // TODO (hannah): Improve edge cases and hide chevron if only one vehicle,
-          // or show add a vehicle action.
           <>
-            <MenuButton as="button" tabIndex={0} width="fit-content">
-              <HStack as="span" spacing={1}>
+            <MenuButton as={Button} tabIndex={0} width="fit-content" variant="ghost" padding={0}>
+              <HStack as="span">
                 <VStack spacing={0}>
                   <Heading as="h1">{vehicleName}</Heading>
                 </VStack>
@@ -129,64 +109,13 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
       <Text fontSize="lg" color="GrayText" alignSelf="flex-start">
         {data.series} • {data.style}
       </Text>
-      <Spacer height={8} />
-      <Card
-        backgroundColor="chakra-body-bg"
-        width={cardWidth}
-        paddingX={6}
-        paddingBottom={8}
-        borderRadius="lg"
-      >
-        <HStack
-          backgroundColor="chakra-body-text"
-          paddingY={3}
-          paddingX={5}
-          marginBottom={3}
-          marginX={-6}
-          borderTopRadius="lg"
-        >
-          <img src={ecoIcon} width="24px" alt="" role="presentation" />
-          <Text fontWeight="semibold" color="Background" whiteSpace="nowrap">
-            Fuel economy and environment
-          </Text>
-        </HStack>
-        <Stack
-          direction={fuelEconomyLayout}
-          spacing={6}
-          alignItems="center"
-          divider={<StackDivider />}
-        >
-          <VStack alignItems="flex-start" spacing="0">
-            <Text>
-              You{" "}
-              <Text as="span" fontSize="3xl" fontWeight="semibold">
-                saved
-              </Text>
-            </Text>
-            <Text fontSize="5xl" fontWeight="bold" as="span">
-              {formatNumber(data.fuelSaving, { style: "currency", currency: LOCAL_CURRENCY })}
-            </Text>
-            <Text>over {formatNumber(sum(Object.values(data.mileage)))} mi this year</Text>
-          </VStack>
-          <VStack alignItems="flex-end" whiteSpace="nowrap">
-            <Text>Annual Fuel Cost</Text>
-            <Text fontSize="4xl">
-              {formatNumber(annualFuelCost, { style: "currency", currency: LOCAL_CURRENCY })}
-            </Text>
-          </VStack>
-          <VStack whiteSpace="nowrap">
-            <Text>
-              Reduced CO<sub>2</sub> emission by
-            </Text>
-            <Text fontSize="4xl">{formatNumber(data.emissionReduction)} lbs</Text>
-          </VStack>
-        </Stack>
-      </Card>
-      <Spacer height={8} />
+      <Spacer paddingBottom={4} />
+      <FuelEconomy vehicle={data} />
+      <Spacer paddingBottom={4} />
       <Heading as="h2" fontSize="xl" role="">
         Mileage driven per month
       </Heading>
-      <Spacer height={4} />
+      <Spacer paddingBottom={2} />
       <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart data={mileage}>
           <CartesianGrid strokeDasharray="4 3" />
@@ -202,6 +131,32 @@ function VehicleContent({ vehicleId }: VehicleContentProps) {
   );
 }
 
+function Fallback() {
+  return (
+    <>
+      <Skeleton>
+        <HStack as="span" spacing={1}>
+          <VStack spacing={0}>
+            <Heading as="h1">Vehicle Name</Heading>
+          </VStack>
+        </HStack>
+      </Skeleton>
+      <Skeleton>
+        <Text fontSize="lg" alignSelf="flex-start">
+          Series and style
+        </Text>
+      </Skeleton>
+      <Spacer paddingBottom={4} flex={0} />
+      <FuelEconomy />
+    </>
+  );
+}
+
+const backButtonHover = {
+  transform: "translateX(-2px)",
+  transition: "transform 200ms ease-in-out",
+};
+
 export const VehicleInfo = memo(function VehicleInfo() {
   const { vehicleId } = useParams();
 
@@ -210,18 +165,19 @@ export const VehicleInfo = memo(function VehicleInfo() {
   }
 
   return (
-    <NetworkBoundary>
+    <>
       <Helmet>
         <title>Vehicle</title>
       </Helmet>
       <Link to="/vehicles">
-        <HStack as="span" spacing={1}>
+        <HStack as="span" spacing={1} paddingBottom={1} _hover={backButtonHover}>
           <ChevronLeftIcon />
           <Text as="span">Back to My Vehicles</Text>
         </HStack>
       </Link>
-      <Spacer height={6} />
-      <VehicleContent vehicleId={vehicleId} />
-    </NetworkBoundary>
+      <NetworkBoundary fallback={<Fallback />}>
+        <VehicleContent vehicleId={vehicleId} />
+      </NetworkBoundary>
+    </>
   );
 });

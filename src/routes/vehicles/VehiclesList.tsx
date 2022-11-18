@@ -6,6 +6,7 @@ import {
   Heading,
   HStack,
   Skeleton,
+  Spinner,
   Stack,
   Text,
   usePrefersReducedMotion,
@@ -16,6 +17,7 @@ import { Helmet } from "react-helmet";
 import * as reactRouterDom from "react-router-dom";
 
 import { NetworkBoundary } from "components/NetworkBoundary";
+import { useFallbackState } from "hooks/useFallbackState";
 
 import { getVehicleName } from "./getVehicleName";
 import { vehiclesListQuery } from "./query";
@@ -27,19 +29,30 @@ const cardHoverStyle = {
 };
 
 function VehiclesListContent() {
-  const { data } = useQuery(vehiclesListQuery());
+  const { isFetching, data, error } = useQuery({ ...vehiclesListQuery(), suspense: false });
+  if (error) {
+    throw error;
+  }
 
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [shouldShowFetchingFallback] = useFallbackState(isFetching);
 
   return (
     <>
       <Text fontSize="xl" paddingTop={3} paddingBottom={8} color="gray.500">
         Total vehicles{" "}
         <Text as="span" color="InfoText" paddingLeft={2}>
-          {data?.length}
+          {shouldShowFetchingFallback ? <Spinner as="span" /> : data?.length}
         </Text>
       </Text>
-      <Stack spacing={4} paddingY={4}>
+      <Stack spacing={4} paddingY={4} width="100%">
+        {shouldShowFetchingFallback && (
+          <>
+            <Skeleton height="93px" />
+            <Skeleton height="93px" />
+            <Skeleton height="93px" />
+          </>
+        )}
         {data?.map((vehicle) => (
           <Card
             key={vehicle.id}
@@ -70,16 +83,6 @@ function VehiclesListContent() {
   );
 }
 
-function Fallback() {
-  return (
-    <VStack>
-      <Skeleton>
-        <Text>Total vehicles 0</Text>
-      </Skeleton>
-    </VStack>
-  );
-}
-
 export const VehiclesList = memo(function VehiclesList() {
   return (
     <>
@@ -87,7 +90,7 @@ export const VehiclesList = memo(function VehiclesList() {
         <title>My Vehicles</title>
       </Helmet>
       <Heading as="h1">My Vehicles</Heading>
-      <NetworkBoundary fallback={<Fallback />}>
+      <NetworkBoundary>
         <VehiclesListContent />
       </NetworkBoundary>
     </>
