@@ -1,3 +1,6 @@
+<img src="./docs/MyVehiclesPreview.png" height="300px" style="border-radius:12px; margin-right:12px">
+<img src="./docs/VehicleDetailPreview.png" height="300px" style="border-radius:12px">
+
 ## Quick start
 
 Make sure you have the matching node version installed
